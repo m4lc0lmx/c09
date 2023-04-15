@@ -11,6 +11,8 @@
 #include <array>
 #include <algorithm>
 #include <fstream>
+#include <ctime>
+
 
 class BitcoinExchange {
     std::map<std::string,double> database;
@@ -23,6 +25,9 @@ public:
 //    BitcoinExchange(Convert &copy);
     BitcoinExchange& operator=(BitcoinExchange &copy);
     ~BitcoinExchange();
+
+    void    calculator(char *file);
+    bool    checkvalue(int value,int min, int max);
 };
 
 
