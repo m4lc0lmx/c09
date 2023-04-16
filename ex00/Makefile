@@ -1,6 +1,6 @@
 NAME = btc
 SRCS =  BitcoinExchange.cpp main.cpp
-FLAG =  -Wall -Wextra -Werror #-std=c++98
+FLAG =  -Wall -Wextra -Werror -std=c++98
 
 all : ${NAME}
 

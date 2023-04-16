@@ -11,5 +11,5 @@ int main(int ac,char **av)
         LL.calculator(av[1]);
     }
     else
-        std::cerr << "usage : ./btc second_database" << std::endl;
+        std::cerr << "Error: could not open file." << std::endl;
 }

@@ -19,7 +19,6 @@ BitcoinExchange::BitcoinExchange() {
                     key = line.substr(0,p);
                     value =  std::stod(line.substr(p + 1));
                     database[key] = value;
-//                    std::cout << database[key]  << std::endl;
                 }
                 else
                 {
@@ -53,17 +52,31 @@ void BitcoinExchange::calculator(char *file) {
                 {
                     key = line.substr(0,p - 1);
                     value =  std::stod(line.substr(p + 2));
-                    std::cerr << key << " | " << value << std::endl;
-                    struct tm tm{};
+                    struct tm tm;
                     if (strptime(key.c_str(), "%Y-%m-%d", &tm)) {
-                        int d = tm.tm_mday,
-                                m = tm.tm_mon + 1,
-                                y = tm.tm_year + 1900;
+                        int y = tm.tm_year + 1900;
                         if (checkvalue(y,2011,2023) == false)
                             std::cerr << "Error: BTC date => " << key << std::endl;
-                        //else if () TODO check for to large number
                         else
-                            std::cout << key
+                        {
+                            if (checkvalue(value,0,1000))
+                            {
+                                if (database[key])
+                                    std::cout << key << " => " << value << " = " << value * database[key] << std::endl;
+                                else
+                                {
+                                    std::map<std::string,double>::iterator it;
+                                    it = database.upper_bound(key);
+                                    it--;
+                                    it--;
+                                    std::cout << key << " => " << value << " = " << value * it->second << std::endl;
+                                }
+                            }
+                            else if (value > 1000)
+                                std::cerr << "Error: too large a number." << std::endl;
+                            else
+                                std::cerr << "Error: not a positive number." << std::endl;
+                        }
                     }
                     else
                         std::cerr << "Error: Date not valid => " << key << std::endl;
@@ -73,6 +86,8 @@ void BitcoinExchange::calculator(char *file) {
             }
         }
     }
+    else
+        std::cerr << "Error: file !!" << line << std::endl;
 
 }
 
